@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<ADComputerCreate>
+  <!--
+      Computer Naming Convention: <MachinePrefix><LocationCode><MachineType>-<ID>
+      Example: CMPDAYL-7001234
+  -->
+  <MachinePrefix>CMP</MachinePrefix>
+  <LocationCode>DAY</LocationCode>
+  <!--
+      OU defined as:
+      OU=<LocationCode>,OU=<Region>,<Laptops|Desktops>,OU=<Container>,<Realm>
+
+      Example: OU=DAY,OU=Americas,OU=Laptops,OU=Workstations,DC=domain,DC=forest,DC=tld
+  -->
+  <AD>
+    <Realm>DC=domain,DC=forest,DC=tld</Realm>
+    <Region>Americas</Region>
+    <Container>Workstations</Container>
+    <JoinDomainGroup>Client Installers</JoinDomainGroup>
+  </AD>
+  <!--
+      Newly created computer accounts can be added to defined group policies
+  -->
+  <Laptops>
+    <Policies>
+      <Policy>Certificate Enabled Workstations</Policy>
+      <Policy>MBAM BitLocker Encrypt</Policy>
+    </Policies>
+    <Attributes>
+    </Attributes>
+  </Laptops>
+  <Desktops>
+    <Policies>
+    </Policies>
+    <Attributes>
+    </Attributes>
+  </Desktops>
+  <Macs>
+    <Policies>
+      <Policy>Certificate Enabled Workstations</Policy>
+    </Policies>
+    <Attributes>
+      <!-- Value will be pulled from OU realm -->
+      <!-- Example: cmpdayl-7001234.domain.forest.tld -->
+      <Attribute>dnsHostName</Attribute>
+    </Attributes>
+  </Macs>
+</ADComputerCreate>
